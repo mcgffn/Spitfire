@@ -1,0 +1,329 @@
+/* ══════════════════════════════════════════════════════════════
+   SPITFIRE — Design System: Glass Neumorphism
+   Strategic Partnership Intelligence & Tactical Framework
+   for Insight-driven Relationship Engineering
+   
+   Color Palette:
+     Primary:  White / Gray / Transparent
+     Accent:   #00A39B (Teal 400) — 기회/긍정
+     Warning:  #E54D53 (Red 400) — 리스크/경고
+   
+   Style:  Glass Neumorphism
+     - Frosted glass backgrounds (backdrop-filter blur)
+     - Soft outer shadows + inner light edges
+     - Pressed/inset states for interactive elements
+   ══════════════════════════════════════════════════════════════ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ─── */
+:root {
+  /* Brand Colors */
+  --teal-50:  #E6F7F6;
+  --teal-100: #B3EAE7;
+  --teal-200: #80DDD8;
+  --teal-300: #4DD0C9;
+  --teal-400: #00A39B;   /* PRIMARY ACCENT */
+  --teal-500: #007A74;
+  --teal-600: #005C57;
+  --teal-700: #003D3A;
+
+  --red-50:  #FDE8E8;
+  --red-100: #FACBCC;
+  --red-200: #F59A9D;
+  --red-300: #EF6A6E;
+  --red-400: #E54D53;     /* WARNING ACCENT */
+  --red-500: #C0392B;
+  --red-600: #962D22;
+
+  --amber-400: #F59E0B;
+  --amber-500: #D97706;
+  --orange-400: #F97316;
+
+  /* Neutral Palette */
+  --gray-50:  #F8FAFC;
+  --gray-100: #F1F5F9;
+  --gray-200: #E2E8F0;
+  --gray-300: #CBD5E1;
+  --gray-400: #94A3B8;
+  --gray-500: #64748B;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1E293B;
+  --gray-900: #0F172A;
+
+  /* Glass Neumorphism Tokens */
+  --glass-bg:         rgba(255, 255, 255, 0.55);
+  --glass-bg-inner:   rgba(255, 255, 255, 0.35);
+  --glass-bg-hover:   rgba(255, 255, 255, 0.70);
+  --glass-border:     rgba(255, 255, 255, 0.60);
+  --glass-border-inner: rgba(255, 255, 255, 0.50);
+  --glass-blur:       24px;
+  --glass-blur-inner: 12px;
+
+  /* Shadows */
+  --shadow-card:    8px 8px 20px rgba(0, 0, 0, 0.06),
+                    -4px -4px 12px rgba(255, 255, 255, 0.80),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.70);
+  --shadow-inner:   4px 4px 12px rgba(0, 0, 0, 0.04),
+                    -2px -2px 8px rgba(255, 255, 255, 0.70),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.60);
+  --shadow-pressed: inset 3px 3px 8px rgba(0, 0, 0, 0.08),
+                    inset -2px -2px 6px rgba(255, 255, 255, 0.60);
+  --shadow-button:  4px 4px 10px rgba(0, 0, 0, 0.06),
+                    -2px -2px 6px rgba(255, 255, 255, 0.80);
+  --shadow-teal:    0 4px 14px rgba(0, 163, 155, 0.35);
+  --shadow-red:     0 4px 14px rgba(229, 77, 83, 0.30);
+
+  /* Layout */
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-2xl: 24px;
+
+  /* Typography */
+  --font-sans: 'Pretendard Variable', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+}
+
+/* ─── Base ─── */
+body {
+  font-family: var(--font-sans);
+  background: linear-gradient(135deg, #f0f2f5 0%, #e8ecf1 30%, #f5f7fa 60%, #eef1f5 100%);
+  color: var(--gray-800);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Glass Neumorphism Component Classes ─── */
+
+/* Primary Glass Card */
+@layer components {
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .glass-card:hover {
+    box-shadow: 10px 10px 24px rgba(0, 0, 0, 0.07),
+                -5px -5px 14px rgba(255, 255, 255, 0.85),
+                inset 0 1px 0 rgba(255, 255, 255, 0.70);
+  }
+
+  /* Inner Glass Card (nested inside glass-card) */
+  .glass-inner {
+    background: var(--glass-bg-inner);
+    backdrop-filter: blur(var(--glass-blur-inner));
+    -webkit-backdrop-filter: blur(var(--glass-blur-inner));
+    border: 1px solid var(--glass-border-inner);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-inner);
+  }
+
+  /* Pressed/Inset State */
+  .glass-pressed {
+    background: rgba(240, 242, 245, 0.50);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-pressed);
+    border: 1px solid rgba(200, 205, 215, 0.40);
+  }
+
+  /* Button Style */
+  .glass-button {
+    background: rgba(255, 255, 255, 0.60);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.70);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-button);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+  }
+
+  .glass-button:hover {
+    background: var(--glass-bg-hover);
+    box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.08),
+                -3px -3px 8px rgba(255, 255, 255, 0.85);
+    transform: translateY(-1px);
+  }
+
+  .glass-button:active {
+    box-shadow: var(--shadow-pressed);
+    transform: translateY(0);
+  }
+
+  /* Teal Primary Button */
+  .btn-teal {
+    background: linear-gradient(135deg, var(--teal-400), var(--teal-500));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-teal);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .btn-teal:hover {
+    box-shadow: 0 6px 20px rgba(0, 163, 155, 0.45);
+    transform: translateY(-1px);
+  }
+
+  /* Red Warning Button */
+  .btn-red {
+    background: linear-gradient(135deg, var(--red-400), var(--red-500));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-red);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  /* ─── Stance Badges ─── */
+  .stance-deepen {
+    background: rgba(0, 163, 155, 0.12);
+    color: var(--teal-400);
+    border: 1.5px solid rgba(0, 163, 155, 0.18);
+  }
+
+  .stance-explore {
+    background: rgba(0, 196, 187, 0.10);
+    color: var(--teal-300);
+    border: 1.5px solid rgba(0, 196, 187, 0.15);
+  }
+
+  .stance-monitor {
+    background: rgba(245, 158, 11, 0.10);
+    color: var(--amber-400);
+    border: 1.5px solid rgba(245, 158, 11, 0.15);
+  }
+
+  .stance-defend {
+    background: rgba(249, 115, 22, 0.10);
+    color: var(--orange-400);
+    border: 1.5px solid rgba(249, 115, 22, 0.15);
+  }
+
+  .stance-avoid {
+    background: rgba(229, 77, 83, 0.10);
+    color: var(--red-400);
+    border: 1.5px solid rgba(229, 77, 83, 0.15);
+  }
+
+  /* ─── Impact Score Badges ─── */
+  .impact-positive {
+    background: rgba(0, 163, 155, 0.08);
+    color: var(--teal-400);
+    border: 1px solid rgba(0, 163, 155, 0.12);
+  }
+
+  .impact-negative {
+    background: rgba(229, 77, 83, 0.08);
+    color: var(--red-400);
+    border: 1px solid rgba(229, 77, 83, 0.12);
+  }
+
+  /* ─── Progress Bars ─── */
+  .bar-teal {
+    background: linear-gradient(90deg, var(--teal-500), var(--teal-400));
+  }
+
+  .bar-red {
+    background: linear-gradient(90deg, var(--red-500), var(--red-400));
+  }
+
+  .bar-amber {
+    background: linear-gradient(90deg, var(--amber-500), var(--amber-400));
+  }
+
+  /* ─── Red Team Warning Card ─── */
+  .red-team-card {
+    border-left: 3px solid rgba(229, 77, 83, 0.40);
+  }
+
+  /* ─── Scrollbar ─── */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.20);
+  }
+}
+
+/* ─── Animations ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.4) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 2s infinite;
+}
+
+/* ─── Stagger delays for list items ─── */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.10s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.20s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.30s; }
+.stagger-7 { animation-delay: 0.35s; }
+.stagger-8 { animation-delay: 0.40s; }
