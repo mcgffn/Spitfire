@@ -64,51 +64,36 @@ const glass = {
   },
 };
 
-// ─── [1] Flame Logo SVG — Enhanced 3D Glassmorphism ───
+// ─── [1] Flame Logo SVG — Clean teal fire, no face ───
 function SpitfireLogo({ size = 42 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: "drop-shadow(0px 4px 6px rgba(0, 163, 155, 0.4))" }}>
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" style={{ filter: "drop-shadow(0px 3px 5px rgba(0,163,155,0.4))" }}>
       <defs>
-        <linearGradient id="flame-base" x1="50" y1="0" x2="50" y2="100" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#2DD4BF" /><stop offset="40%" stopColor="#00A39B" /><stop offset="100%" stopColor="#005C57" />
+        <linearGradient id="fl" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#5EEAD4"/><stop offset="30%" stopColor="#2DD4BF"/><stop offset="60%" stopColor="#00A39B"/><stop offset="100%" stopColor="#005C57"/>
         </linearGradient>
-        <linearGradient id="glass-edge" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.9" /><stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.1" /><stop offset="100%" stopColor="#00A39B" stopOpacity="0.8" />
+        <linearGradient id="flInner" x1="40" y1="10" x2="40" y2="70" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.4"/><stop offset="100%" stopColor="#00A39B" stopOpacity="0.1"/>
         </linearGradient>
-        <linearGradient id="tooth-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" /><stop offset="100%" stopColor="#2DD4BF" stopOpacity="0.3" />
-        </linearGradient>
+        <filter id="glo"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      <path d="M32 18 C38 32 42 28 47 22 C49 15 50 8 50 8 C50 8 53 20 60 25 C65 29 70 20 75 16 C75 16 71 30 76 38 C83 50 90 60 85 80 C80 100 50 100 50 100 C50 100 20 100 15 80 C10 60 17 50 24 38 C29 30 25 16 25 16 C30 20 35 29 32 18 Z" fill="url(#flame-base)" />
-      <path d="M32 18 C38 32 42 28 47 22 C49 15 50 8 50 8 C50 8 53 20 60 25 C65 29 70 20 75 16 C75 16 71 30 76 38 C83 50 90 60 85 80 C80 100 50 100 50 100 C50 100 20 100 15 80 C10 60 17 50 24 38 C29 30 25 16 25 16 C30 20 35 29 32 18 Z" fill="none" stroke="url(#glass-edge)" strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M34 22 C39 34 43 31 47 26 C49 21 50 15 50 15 C50 15 53 24 59 28 C63 31 67 24 71 21 C71 21 68 32 73 39 C79 50 85 59 81 78 C77 95 50 96 50 96 C50 96 23 95 19 78 C15 59 21 50 27 39 C32 32 29 21 29 21 C33 24 37 31 34 22 Z" fill="none" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.5" />
-      <path d="M26 50 Q 36 44 43 51 Q 36 54 26 50 Z" fill="#003D3A" opacity="0.8" />
-      <path d="M74 50 Q 64 44 57 51 Q 64 54 74 50 Z" fill="#003D3A" opacity="0.8" />
-      <path d="M28 49.5 Q 36 45 41 50" fill="none" stroke="#2DD4BF" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M72 49.5 Q 64 45 59 50" fill="none" stroke="#2DD4BF" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M16 66 Q 50 96 84 66 Q 50 80 16 66 Z" fill="#003D3A" opacity="0.6" stroke="#007A74" strokeWidth="1.5" />
-      <g stroke="#FFFFFF" strokeWidth="0.8">
-        <polygon points="17,67 24,69 23,80" fill="url(#tooth-grad)" />
-        <polygon points="24,69 33,72 31,86" fill="url(#tooth-grad)" />
-        <polygon points="33,72 42,74 41,89" fill="url(#tooth-grad)" />
-        <polygon points="42,74 50,75 46,92" fill="url(#tooth-grad)" />
-        <polygon points="50,75 58,74 54,92" fill="url(#tooth-grad)" />
-        <polygon points="58,74 67,72 61,89" fill="url(#tooth-grad)" />
-        <polygon points="67,72 76,69 69,86" fill="url(#tooth-grad)" />
-        <polygon points="76,69 83,67 77,80" fill="url(#tooth-grad)" />
-      </g>
-      <g stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" opacity="0.8">
-        <line x1="24" y1="69" x2="23" y2="80" /><line x1="33" y1="72" x2="31" y2="86" /><line x1="42" y1="74" x2="41" y2="89" />
-        <line x1="50" y1="75" x2="46" y2="92" /><line x1="58" y1="74" x2="54" y2="92" /><line x1="67" y1="72" x2="61" y2="89" />
-        <line x1="76" y1="69" x2="69" y2="86" />
-      </g>
-      <circle cx="28" cy="35" r="2.5" fill="#FFFFFF" fillOpacity="0.6" />
-      <circle cx="38" cy="22" r="1.5" fill="#FFFFFF" fillOpacity="0.4" />
-      <circle cx="68" cy="32" r="2" fill="#FFFFFF" fillOpacity="0.5" />
-      <circle cx="78" cy="45" r="1.2" fill="#FFFFFF" fillOpacity="0.3" />
-      <circle cx="22" cy="48" r="1.8" fill="#FFFFFF" fillOpacity="0.5" />
-      <circle cx="48" cy="40" r="2" fill="#FFFFFF" fillOpacity="0.6" />
-      <circle cx="58" cy="18" r="1" fill="#FFFFFF" fillOpacity="0.5" />
+      {/* Main flame body */}
+      <path d="M40 2 C40 2,30 16,26 24 C20 34,15 40,13 50 C11 58,15 68,22 74 C28 78,34 80,40 80 C46 80,52 78,58 74 C65 68,69 58,67 50 C65 40,60 34,54 24 C50 16,40 2,40 2Z" fill="url(#fl)" filter="url(#glo)"/>
+      {/* Left flame tongue */}
+      <path d="M22 12 C20 20,16 30,15 38 C14 44,15 48,17 52" stroke="url(#fl)" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.9"/>
+      {/* Right flame tongue */}
+      <path d="M58 12 C60 20,64 30,65 38 C66 44,65 48,63 52" stroke="url(#fl)" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.9"/>
+      {/* Center spike */}
+      <path d="M40 2 L40 18" stroke="#5EEAD4" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.7"/>
+      {/* Inner flame highlight */}
+      <path d="M40 22 C40 22,34 34,32 42 C30 50,33 62,40 66 C47 62,50 50,48 42 C46 34,40 22,40 22Z" fill="url(#flInner)" opacity="0.6"/>
+      {/* Glass edge highlight */}
+      <path d="M28 20 C26 28,22 36,21 44 C20 50,22 58,26 64" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.3"/>
+      {/* Gel droplets */}
+      <circle cx="28" cy="32" r="2.5" fill="white" fillOpacity="0.5"/>
+      <circle cx="48" cy="22" r="1.5" fill="white" fillOpacity="0.4"/>
+      <circle cx="55" cy="38" r="2" fill="white" fillOpacity="0.35"/>
+      <circle cx="36" cy="14" r="1" fill="white" fillOpacity="0.5"/>
     </svg>
   );
 }
@@ -151,14 +136,14 @@ const AXIS_EXPLAIN: Record<string, { title: string; desc: string; example: strin
 // ─── [9] Per-company static data (until AI integration) ───
 // [2] techIntel and rumors fields added
 const COMPANY_DATA: Record<string, { redTeam: string[]; questions: string[]; strengths: string[]; risks: string[]; engagement: string; people: { name: string; role: string }[]; techIntel: string[]; rumors: string[] }> = {
-  "Microsoft": { redTeam: ["Azure가 KT Cloud와 직접 경쟁 — 협력 범위가 실질적으로 제한될 수 있음.", "OpenAI 독점 투자로 AI 모델 접근이 Azure 종속으로 이어질 위험.", "한국 데이터센터 확장이 KT의 소버린 클라우드 전략을 약화시킬 가능성."], questions: ["Azure 한국 리전 확장과 KT Cloud 하이브리드 협력 모델 가능성은?", "Copilot 공공 도입에서 KT B2G 채널 활용 의향은?", "OpenAI 모델의 KT 전용 파인튜닝/온프레미스 배포 가능성은?", "소버린 AI 인프라 구축에서 Microsoft의 역할 구상은?"], strengths: ["B2B/B2G 채널 시너지 최대 — M365+Teams+Copilot과 KT 기업 영업망.", "AI 모델(OpenAI) + 클라우드(Azure) 통합 생태계.", "정부/공공 클라우드 공동 수주 기회."], risks: ["Azure vs KT Cloud 직접 경쟁 구도.", "OpenAI 종속으로 인한 전략적 자율성 감소.", "Copilot이 KT의 자체 AI 서비스와 카니발라이제이션."], engagement: "하이브리드 클라우드 모델(Azure + KT Cloud)을 통한 B2G 공동 수주, Copilot의 KT 기업 고객 대상 번들 판매, 소버린 AI 인프라 공동 구축 파일럿 추진.", people: [{ name: "Satya Nadella", role: "CEO" }, { name: "Kevin Scott", role: "CTO" }, { name: "Judson Althoff", role: "CCO" }], techIntel: ["Azure OpenAI Service에 GPT-5 계열 모델 독점 배포 — Responses API로 reasoning 모델 통합.", "Microsoft Fabric: 데이터 레이크 + AI 통합 플랫폼. Palantir Foundry의 직접 경쟁자로 부상.", "Copilot Studio: 기업이 자체 Copilot을 커스터마이징할 수 있는 로코드 플랫폼. KT 기업 고객 대상 킬러 앱 가능성.", "Azure Confidential Computing: 하드웨어 기반 데이터 암호화. 소버린 AI 인프라의 핵심 기술."], rumors: ["내부적으로 OpenAI 의존도 줄이기 위한 자체 모델(MAI-1 후속) 개발 가속 중이라는 소문.", "Azure 한국 리전 3번째 확장이 2026 하반기 확정이라는 업계 루머 — KT Cloud 직접 위협.", "Copilot 유료 전환율이 예상보다 낮아 내부에서 가격 정책 재검토 중이라는 Blind 정보.", "LinkedIn 데이터를 AI 학습에 활용하려는 내부 프로젝트가 개인정보 이슈로 보류됐다는 정보."] },
-  "NVIDIA": { redTeam: ["GPU 수출 규제 확대 시 KT AIDC 공급 차질 위험.", "DGX Cloud 확장이 KT Cloud와 직접 경쟁할 가능성.", "GPU 의존도 과다 — AMD/Intel 대안 부상 시 레버리지 상실."], questions: ["GB300의 한국 할당량 및 납기 타임라인은?", "DGX Cloud의 한국 시장 직접 진출 계획은?", "소버린 AI MOU의 구체적 이행 로드맵은?", "KT AIDC 전용 GPU 클러스터 장기 공급 계약 가능성은?"], strengths: ["AI 인프라의 핵심 공급자 — GPU 없이 AI 사업 불가.", "소버린 AI 인프라 구축에서 최적의 하드웨어 파트너.", "NVIDIA 생태계(CUDA, DGX) + KT 서비스 레이어 시너지."], risks: ["NVIDIA에 대한 과도한 의존 → 가격/공급 협상력 약화.", "DGX Cloud가 KT Cloud 경쟁자로 발전할 가능성.", "수출 규제로 GPU 조달 불확실성."], engagement: "KT AIDC에 차세대 GPU(GB300) 대규모 도입, 소버린 AI 인프라 공동 구축, NVIDIA 스타트업 프로그램과 KT 생태계 연계.", people: [{ name: "Jensen Huang", role: "CEO & Founder" }, { name: "Colette Kress", role: "CFO" }, { name: "Ian Buck", role: "VP Hyperscale" }], techIntel: ["GB300 NVL72: 차세대 AI 슈퍼칩. 단일 랙에서 1.4 exaFLOPS FP4 성능. B200 대비 4배 추론 효율.", "CUDA 생태계 락인이 최대 해자 — AMD ROCm/Intel oneAPI가 추격 중이나 개발자 이탈은 미미.", "NIM(NVIDIA Inference Microservices): 컨테이너 기반 추론 배포 표준화. KT Cloud에 즉시 통합 가능.", "Omniverse: 디지털 트윈 플랫폼. 통신 네트워크 시뮬레이션에 활용 가능성."], rumors: ["GB300 양산이 TSMC CoWoS 패키징 병목으로 2026 Q3까지 지연될 수 있다는 공급망 루머.", "Jensen Huang이 한국 방문 시 삼성전자와 HBM 독점 협상을 진행했다는 업계 정보 — SK하이닉스 긴장.", "내부적으로 ARM 기반 CPU 'Grace' 후속작이 x86 서버 시장 직접 진출을 준비 중이라는 소문.", "DGX Cloud 가격이 경쟁 대비 30% 프리미엄인데 내부에서도 가격 저항이 있다는 Blind 정보."] },
-  "Palantir": { redTeam: ["폐쇄적 플랫폼 구조가 KT 자체 데이터 역량 발전을 저해할 가능성.", "미국 정부 의존도 높은 기업 문화가 한국 시장 맞춤화에 한계.", "보안 인가 요건으로 실제 협력 범위가 예상보다 좁아질 가능성."], questions: ["한국 국방 시장에서 KT와의 구체적 채널 협력 모델은?", "Foundry 온프레미스 배포 시 KT Cloud 인프라 활용 의향은?", "AIP(AI Platform)의 한국어 지원 로드맵은?"], strengths: ["B2G(정부/국방) 데이터 분석 최강 — KT B2G 채널과 시너지.", "Foundry 플랫폼 + KT 기업 데이터 분석 역량 결합.", "보안 인가 데이터 처리에서 공동 역량 구축."], risks: ["Palantir 플랫폼 종속 리스크.", "미국 중심 문화로 한국 시장 대응 속도 느림.", "높은 라이선스 비용."], engagement: "국방/공공 데이터 분석 공동 수주, Foundry 온프레미스를 KT Cloud 위에 배포하는 파일럿, AIP와 KT AI 서비스 통합 PoC 추진.", people: [{ name: "Alex Karp", role: "CEO" }, { name: "Shyam Sankar", role: "CTO" }, { name: "Ted Mabrey", role: "Head of Global Commercial" }], techIntel: ["AIP(AI Platform): 기존 Foundry 위에 LLM을 얹은 제품. 기업 데이터를 LLM 컨텍스트에 주입하는 '온톨로지' 구조가 핵심.", "Apollo: 소프트웨어 배포 자동화 도구. 에어갭(Air-gapped) 환경에서도 작동 — 국방/공공에 필수.", "TITAN: 자체 AI 모델 개발 프로젝트. 외부 LLM 의존도를 줄이려는 전략.", "FedStart: 미국 정부 스타트업 프로그램. 정부 데이터 접근 파이프라인의 사실상 표준."], rumors: ["AIP 수익이 전체 매출의 40%를 넘었다는 내부 정보 — 전환이 예상보다 빠름.", "Alex Karp이 한국 방문을 2026 Q2에 계획 중이라는 업계 정보.", "Palantir가 한국 대형 SI(시스템 통합) 업체와 파트너십을 비공개 협상 중이라는 소문 — KT 경쟁 가능성.", "Gotham 플랫폼의 한국 국방부 시범 사업에서 데이터 한국어 처리 이슈가 발생했다는 내부 정보."] },
-  "Anthropic": { redTeam: ["Amazon/Google 투자로 인한 전략적 종속 — KT 파트너십 우선순위 밀릴 가능성.", "Claude 모델 경쟁 심화(OpenAI, Google)로 차별화 가치 불확실.", "비상장 기업으로 재무 투명성 제한."], questions: ["Claude 엔터프라이즈 배포에서 KT Cloud를 인프라 파트너로 고려하는가?", "AI Safety 관련 규제 대응에서 KT와의 공동 포지셔닝 가능성은?", "아시아 엔터프라이즈 파트너 프로그램의 한국 파트너 구조는?"], strengths: ["AI Safety 중심 차별화 — 규제 대응에서 유리.", "Claude 모델의 코딩/분석 성능 최상위권.", "KT B2B 채널을 통한 Claude 엔터프라이즈 공동 판매 기회."], risks: ["Amazon/Google 종속으로 전략적 자율성 제한.", "모델 경쟁 심화로 장기 차별화 불확실.", "인프라 자체 미보유 — 클라우드 파트너에 의존."], engagement: "Claude API의 KT Cloud 호스팅 파일럿, KT B2B 채널을 통한 Claude 엔터프라이즈 공동 판매, AI Safety + 데이터 컴플라이언스 공동 솔루션 개발.", people: [{ name: "Dario Amodei", role: "CEO" }, { name: "Daniela Amodei", role: "President" }, { name: "Tom Brown", role: "VP of Product" }], techIntel: ["Constitutional AI: 인간 피드백 없이 AI가 스스로 안전성을 학습하는 기술. 규제 대응의 핵심 차별화.", "Claude Code: CLI 기반 에이전틱 코딩 도구. 개발자 시장 직접 공략.", "MCP(Model Context Protocol): 외부 도구/서비스를 Claude에 연결하는 개방형 프로토콜. 생태계 확장 전략.", "Claude Opus 4.6: 코딩/분석/장문 처리에서 GPT-5와 경쟁하는 최상위 모델."], rumors: ["Amazon이 Anthropic 이사회 의석을 요구하고 있다는 내부 정보 — 독립성 위협.", "Claude 5 개발이 예상보다 빨리 진행 중이며 2026 Q3 출시를 목표로 한다는 소문.", "Anthropic이 자체 추론 칩 설계를 Amazon Trainium 팀과 공동으로 진행 중이라는 루머.", "내부 직원들 사이에서 '안전 우선' 문화와 '시장 속도' 사이의 긴장이 커지고 있다는 Blind 정보."] },
-  "xAI": { redTeam: ["Elon Musk의 예측 불가능한 의사결정이 파트너십 안정성에 리스크.", "자체 인프라(Colossus) 구축으로 외부 클라우드 의존도 최소화 전략 — KT 가치 제한적.", "수익 모델 미확정으로 장기 파트너십 ROI 불확실."], questions: ["Grok 모델의 아시아 시장 배포 전략은?", "자체 인프라 외 외부 클라우드 파트너십 필요성을 어떻게 평가하는가?", "X 플랫폼과 Grok의 기업용 분리 제공 계획은?"], strengths: ["소버린 AI 인프라 공동 구축 시너지 잠재력.", "Grok 모델의 빠른 성능 향상 — 파트너십 가치 상승 가능.", "아시아 시장 진출 시 KT가 유력한 현지 파트너."], risks: ["자체 인프라 전략으로 KT Cloud 필요성 낮음.", "수익 모델 불확실 — 투자 회수 불투명.", "Musk 리스크 — 정치적/사회적 변동성."], engagement: "현 시점에서는 정보 수집 중심. Grok의 아시아 시장 전략이 구체화되면 KT Cloud 인프라 파트너십을 제안할 수 있음.", people: [{ name: "Elon Musk", role: "Founder" }, { name: "Igor Babuschkin", role: "CTO" }], techIntel: ["Colossus: 20만 H100 GPU 클러스터. 세계 최대 단일 AI 훈련 인프라 (Memphis, TN).", "Grok 3.5: 코딩/수학 벤치마크 최상위권. X 플랫폼 실시간 데이터 학습이 차별화.", "자체 추론 칩 개발 소문 — NVIDIA 의존도 탈피 전략.", "X API를 통한 실시간 소셜 데이터 접근이 다른 AI 기업 대비 고유한 데이터 해자."], rumors: ["Colossus 2.0으로 100만 GPU 클러스터를 2027년까지 구축한다는 Musk의 비공개 발언 루머.", "xAI가 별도 클라우드 서비스를 준비 중이라는 소문 — AWS/Azure/GCP에 도전?", "내부 엔지니어 이직률이 높다는 Blind 정보 — Musk의 경영 스타일에 대한 피로감.", "Grok API 엔터프라이즈 버전이 2026 Q3 출시 예정이라는 업계 정보."] },
-  "Meta": { redTeam: ["Llama 오픈소스 전략은 KT 차별화 가치를 약화 — 누구나 접근 가능.", "Meta의 한국 시장 투자 우선순위가 낮음.", "Reality Labs 손실 지속으로 전략 방향 불확실."], questions: ["Llama 모델의 엔터프라이즈 파인튜닝 파트너십 모델은?", "한국 시장에서 Meta AI의 B2B 전략은?", "한국 AI 연구센터 설립 계획의 구체적 내용은?"], strengths: ["Llama 오픈소스로 AI 모델 접근 용이 — 파인튜닝 자유도.", "WhatsApp/Instagram + KT 통신 번들 가능성.", "Meta AI 추론 인프라 일부 호스팅 기회."], risks: ["오픈소스 모델로 차별적 파트너십 가치 낮음.", "한국 시장 우선순위 낮음.", "광고 수익 편중으로 B2B 전략 약함."], engagement: "Llama 모델 기반 KT 전용 파인튜닝 PoC, WhatsApp Business API + KT 기업 고객 번들 탐색.", people: [{ name: "Mark Zuckerberg", role: "CEO" }, { name: "Andrew Bosworth", role: "CTO" }, { name: "Javier Olivan", role: "COO" }], techIntel: ["Llama 4 Scout/Maverick: Mixture-of-Experts 아키텍처. 오픈 웨이트로 공개. 16개 전문가 모델 라우팅.", "MTIA v2: Meta 자체 AI 추론 칩. NVIDIA 의존도 탈피 시도. 현재 내부 추론 워크로드에 배포 중.", "Reality Labs: Quest 시리즈 + Ray-Ban Meta 스마트 글래스. 연간 $15B+ 투자 지속.", "WhatsApp Channels: 기업/크리에이터용 브로드캐스트 채널. B2B 커뮤니케이션 플랫폼으로 진화 중."], rumors: ["Llama 5가 GPT-5 수준을 목표로 하며 오픈소스 공개를 지속할 것이라는 내부 정보.", "Reality Labs의 내부 프로젝트 리뷰에서 Zuckerberg가 '3년 내 흑자 전환' 데드라인을 제시했다는 소문.", "Meta가 한국 AI 연구소 대신 싱가포르에 아시아 AI 허브를 설립할 수 있다는 루머.", "Instagram Reels의 AI 추천 알고리즘이 내부적으로 'too addictive' 판정을 받아 조정 중이라는 Blind 정보."] },
-  "Google": { redTeam: ["Google Cloud의 한국 시장 공격적 확장이 KT Cloud와 직접 충돌.", "Gemini 모델 독점적 통합이 KT의 멀티모델 전략을 제한할 가능성.", "반독점 규제 판결이 파트너십 구조에 영향."], questions: ["소버린 클라우드(Google Distributed Cloud)의 한국 배포 계획은?", "Gemini API의 KT 전용 파인튜닝 파트너십 가능성은?", "한국 정부 클라우드 사업에서 KT와의 협력 vs 경쟁 구도를 어떻게 보는가?"], strengths: ["Gemini 모델 + KT 엔터프라이즈 AI 서비스 통합 시너지.", "Android/YouTube + KT 통신/IPTV 시너지.", "소버린 AI 인프라(Google Distributed Cloud) 공동 구축."], risks: ["Google Cloud vs KT Cloud 직접 경쟁.", "Gemini 종속으로 멀티모델 전략 제한.", "반독점 리스크."], engagement: "Google Distributed Cloud 기반 소버린 AI 인프라 공동 구축, Gemini의 KT 엔터프라이즈 서비스 통합 PoC, 정부 클라우드 공동 입찰 구조 설계.", people: [{ name: "Sundar Pichai", role: "CEO" }, { name: "Thomas Kurian", role: "CEO, Google Cloud" }, { name: "Demis Hassabis", role: "CEO, DeepMind" }], techIntel: ["Gemini 2.5 Pro: 100만 토큰 컨텍스트 윈도우. 코딩/분석 벤치마크 최상위. 'thinking' 모드 내장.", "TPU v6 (Trillium): 자체 AI 칩. H100 대비 성능/전력 효율 우위 주장. Cloud TPU로 외부 제공.", "Google Distributed Cloud (GDC): 온프레미스/에지 배포용 소버린 클라우드. 정부/통신사 타겟.", "Vertex AI: 모델 학습/배포/모니터링 통합 플랫폼. AutoML + 커스텀 모델 + Gemini API 통합."], rumors: ["Google Cloud 한국 팀이 공공 클라우드 시장에서 '가격 덤핑' 전략을 내부 승인받았다는 소문 — KT Cloud 직접 위협.", "DeepMind와 Google Brain 통합 이후 내부 갈등이 여전하다는 Blind 정보 — 연구 방향성 혼선.", "Gemini Ultra 모델의 한국어 성능이 GPT-5 대비 열위라는 내부 평가 루머.", "GDC의 한국 배포가 KT와의 비공식 협의 중이라는 업계 정보 — 아직 공식 발표 전."] },
-  "Netflix": { redTeam: ["AI/클라우드 교차점이 제한적 — CDN 최적화 이상의 전략적 깊이 없음.", "Netflix 광고 티어가 KT IPTV 광고와 경쟁.", "콘텐츠 비용 증가로 파트너십 투자 여력 제한."], questions: ["Open Connect CDN의 KT 네트워크 엣지 통합 심화 가능성은?", "한국 오리지널 콘텐츠 투자 확대 시 KT와의 공동 제작 모델은?", "광고 지원 요금제에서 KT IPTV와의 시너지 모델은?"], strengths: ["Netflix + KT IPTV/통신 번들 시너지 강함.", "한국 콘텐츠 투자 적극적 — 공동 제작 기회.", "Open Connect CDN + KT 네트워크 최적화."], risks: ["AI/클라우드 전략적 교차점 제한적.", "광고 티어가 KT IPTV와 경쟁.", "Application 레이어로 인프라 파트너십 깊이 얕음."], engagement: "KT IPTV 독점 번들 확대, 한국 오리지널 콘텐츠 공동 제작/투자, Open Connect CDN의 KT 엣지 노드 통합 심화.", people: [{ name: "Ted Sarandos", role: "Co-CEO" }, { name: "Greg Peters", role: "Co-CEO" }, { name: "Minyoung Kim", role: "VP, Content (Korea)" }], techIntel: ["Open Connect CDN: Netflix 자체 CDN. 전 세계 ISP에 캐시 서버를 무료 배포. KT 네트워크에도 설치됨.", "Cosmos: Netflix 자체 비디오 인코딩 프레임워크. AV1 코덱 최적화. 대역폭 절감 핵심 기술.", "추천 알고리즘: 시청 데이터 + 콘텐츠 메타데이터 + A/B 테스트 기반. 매출의 80%가 추천에서 발생한다는 추정.", "게임 사업: 모바일 게임 40+ 타이틀. 구독자 번들 무료 제공. 아직 초기 단계."], rumors: ["Netflix가 라이브 스포츠 중계에 본격 진출할 것이라는 내부 정보 — WWE에 이어 NFL/NBA 협상 중.", "한국 콘텐츠 투자가 2027년부터 축소될 수 있다는 업계 루머 — ROI 재평가.", "광고 티어의 한국 수익이 예상보다 낮아 광고주 유치에 고전 중이라는 정보.", "Open Connect 팀이 AI 추론 에지 배포를 CDN 인프라에 통합하는 실험을 진행 중이라는 기술 루머."] },
+  "Microsoft": { redTeam: ["Azure가 KT Cloud와 직접 경쟁 — 협력 범위가 실질적으로 제한될 수 있음.", "OpenAI 독점 투자로 AI 모델 접근이 Azure 종속으로 이어질 위험.", "한국 데이터센터 확장이 KT의 소버린 클라우드 전략을 약화시킬 가능성."], questions: ["Azure 한국 리전 확장과 KT Cloud 하이브리드 협력 모델 가능성은?", "Copilot 공공 도입에서 KT B2G 채널 활용 의향은?", "OpenAI 모델의 KT 전용 파인튜닝/온프레미스 배포 가능성은?", "소버린 AI 인프라 구축에서 Microsoft의 역할 구상은?"], strengths: ["B2B/B2G 채널 시너지 최대 — M365+Teams+Copilot과 KT 기업 영업망.", "AI 모델(OpenAI) + 클라우드(Azure) 통합 생태계.", "정부/공공 클라우드 공동 수주 기회."], risks: ["Azure vs KT Cloud 직접 경쟁 구도.", "OpenAI 종속으로 인한 전략적 자율성 감소.", "Copilot이 KT의 자체 AI 서비스와 카니발라이제이션."], engagement: "하이브리드 클라우드 모델(Azure + KT Cloud)을 통한 B2G 공동 수주, Copilot의 KT 기업 고객 대상 번들 판매, 소버린 AI 인프라 공동 구축 파일럿 추진.", people: [{ name: "Satya Nadella", role: "CEO" }, { name: "Kevin Scott", role: "CTO" }, { name: "Judson Althoff", role: "CCO" }, { name: "Amy Hood", role: "CFO" }, { name: "Brad Smith", role: "Vice Chair & President" }, { name: "Mustafa Suleyman", role: "CEO, Microsoft AI" }, { name: "Charlie Bell", role: "EVP, Security" }, { name: "Sam Altman", role: "CEO, OpenAI (Partner)" }], techIntel: ["Azure OpenAI Service에 GPT-5 계열 모델 독점 배포 — Responses API로 reasoning 모델 통합.", "Microsoft Fabric: 데이터 레이크 + AI 통합 플랫폼. Palantir Foundry의 직접 경쟁자로 부상.", "Copilot Studio: 기업이 자체 Copilot을 커스터마이징할 수 있는 로코드 플랫폼. KT 기업 고객 대상 킬러 앱 가능성.", "Azure Confidential Computing: 하드웨어 기반 데이터 암호화. 소버린 AI 인프라의 핵심 기술."], rumors: ["내부적으로 OpenAI 의존도 줄이기 위한 자체 모델(MAI-1 후속) 개발 가속 중이라는 소문.", "Azure 한국 리전 3번째 확장이 2026 하반기 확정이라는 업계 루머 — KT Cloud 직접 위협.", "Copilot 유료 전환율이 예상보다 낮아 내부에서 가격 정책 재검토 중이라는 Blind 정보.", "LinkedIn 데이터를 AI 학습에 활용하려는 내부 프로젝트가 개인정보 이슈로 보류됐다는 정보."] },
+  "NVIDIA": { redTeam: ["GPU 수출 규제 확대 시 KT AIDC 공급 차질 위험.", "DGX Cloud 확장이 KT Cloud와 직접 경쟁할 가능성.", "GPU 의존도 과다 — AMD/Intel 대안 부상 시 레버리지 상실."], questions: ["GB300의 한국 할당량 및 납기 타임라인은?", "DGX Cloud의 한국 시장 직접 진출 계획은?", "소버린 AI MOU의 구체적 이행 로드맵은?", "KT AIDC 전용 GPU 클러스터 장기 공급 계약 가능성은?"], strengths: ["AI 인프라의 핵심 공급자 — GPU 없이 AI 사업 불가.", "소버린 AI 인프라 구축에서 최적의 하드웨어 파트너.", "NVIDIA 생태계(CUDA, DGX) + KT 서비스 레이어 시너지."], risks: ["NVIDIA에 대한 과도한 의존 → 가격/공급 협상력 약화.", "DGX Cloud가 KT Cloud 경쟁자로 발전할 가능성.", "수출 규제로 GPU 조달 불확실성."], engagement: "KT AIDC에 차세대 GPU(GB300) 대규모 도입, 소버린 AI 인프라 공동 구축, NVIDIA 스타트업 프로그램과 KT 생태계 연계.", people: [{ name: "Jensen Huang", role: "CEO & Founder" }, { name: "Colette Kress", role: "CFO" }, { name: "Ian Buck", role: "VP Hyperscale & HPC" }, { name: "Manuvir Das", role: "VP Enterprise Computing" }, { name: "Deepu Talla", role: "VP Embedded & Edge" }, { name: "Bill Dally", role: "Chief Scientist" }, { name: "Debora Shoquist", role: "EVP Operations" }], techIntel: ["GB300 NVL72: 차세대 AI 슈퍼칩. 단일 랙에서 1.4 exaFLOPS FP4 성능. B200 대비 4배 추론 효율.", "CUDA 생태계 락인이 최대 해자 — AMD ROCm/Intel oneAPI가 추격 중이나 개발자 이탈은 미미.", "NIM(NVIDIA Inference Microservices): 컨테이너 기반 추론 배포 표준화. KT Cloud에 즉시 통합 가능.", "Omniverse: 디지털 트윈 플랫폼. 통신 네트워크 시뮬레이션에 활용 가능성."], rumors: ["GB300 양산이 TSMC CoWoS 패키징 병목으로 2026 Q3까지 지연될 수 있다는 공급망 루머.", "Jensen Huang이 한국 방문 시 삼성전자와 HBM 독점 협상을 진행했다는 업계 정보 — SK하이닉스 긴장.", "내부적으로 ARM 기반 CPU 'Grace' 후속작이 x86 서버 시장 직접 진출을 준비 중이라는 소문.", "DGX Cloud 가격이 경쟁 대비 30% 프리미엄인데 내부에서도 가격 저항이 있다는 Blind 정보."] },
+  "Palantir": { redTeam: ["폐쇄적 플랫폼 구조가 KT 자체 데이터 역량 발전을 저해할 가능성.", "미국 정부 의존도 높은 기업 문화가 한국 시장 맞춤화에 한계.", "보안 인가 요건으로 실제 협력 범위가 예상보다 좁아질 가능성."], questions: ["한국 국방 시장에서 KT와의 구체적 채널 협력 모델은?", "Foundry 온프레미스 배포 시 KT Cloud 인프라 활용 의향은?", "AIP(AI Platform)의 한국어 지원 로드맵은?"], strengths: ["B2G(정부/국방) 데이터 분석 최강 — KT B2G 채널과 시너지.", "Foundry 플랫폼 + KT 기업 데이터 분석 역량 결합.", "보안 인가 데이터 처리에서 공동 역량 구축."], risks: ["Palantir 플랫폼 종속 리스크.", "미국 중심 문화로 한국 시장 대응 속도 느림.", "높은 라이선스 비용."], engagement: "국방/공공 데이터 분석 공동 수주, Foundry 온프레미스를 KT Cloud 위에 배포하는 파일럿, AIP와 KT AI 서비스 통합 PoC 추진.", people: [{ name: "Alex Karp", role: "CEO" }, { name: "Shyam Sankar", role: "CTO" }, { name: "Ted Mabrey", role: "Head of Global Commercial" }, { name: "Dave Glazer", role: "CFO" }, { name: "Ryan Taylor", role: "Chief Revenue Officer" }, { name: "Aki Jain", role: "Head of APAC" }, { name: "Peter Thiel", role: "Co-Founder & Board" }], techIntel: ["AIP(AI Platform): 기존 Foundry 위에 LLM을 얹은 제품. 기업 데이터를 LLM 컨텍스트에 주입하는 '온톨로지' 구조가 핵심.", "Apollo: 소프트웨어 배포 자동화 도구. 에어갭(Air-gapped) 환경에서도 작동 — 국방/공공에 필수.", "TITAN: 자체 AI 모델 개발 프로젝트. 외부 LLM 의존도를 줄이려는 전략.", "FedStart: 미국 정부 스타트업 프로그램. 정부 데이터 접근 파이프라인의 사실상 표준."], rumors: ["AIP 수익이 전체 매출의 40%를 넘었다는 내부 정보 — 전환이 예상보다 빠름.", "Alex Karp이 한국 방문을 2026 Q2에 계획 중이라는 업계 정보.", "Palantir가 한국 대형 SI(시스템 통합) 업체와 파트너십을 비공개 협상 중이라는 소문 — KT 경쟁 가능성.", "Gotham 플랫폼의 한국 국방부 시범 사업에서 데이터 한국어 처리 이슈가 발생했다는 내부 정보."] },
+  "Anthropic": { redTeam: ["Amazon/Google 투자로 인한 전략적 종속 — KT 파트너십 우선순위 밀릴 가능성.", "Claude 모델 경쟁 심화(OpenAI, Google)로 차별화 가치 불확실.", "비상장 기업으로 재무 투명성 제한."], questions: ["Claude 엔터프라이즈 배포에서 KT Cloud를 인프라 파트너로 고려하는가?", "AI Safety 관련 규제 대응에서 KT와의 공동 포지셔닝 가능성은?", "아시아 엔터프라이즈 파트너 프로그램의 한국 파트너 구조는?"], strengths: ["AI Safety 중심 차별화 — 규제 대응에서 유리.", "Claude 모델의 코딩/분석 성능 최상위권.", "KT B2B 채널을 통한 Claude 엔터프라이즈 공동 판매 기회."], risks: ["Amazon/Google 종속으로 전략적 자율성 제한.", "모델 경쟁 심화로 장기 차별화 불확실.", "인프라 자체 미보유 — 클라우드 파트너에 의존."], engagement: "Claude API의 KT Cloud 호스팅 파일럿, KT B2B 채널을 통한 Claude 엔터프라이즈 공동 판매, AI Safety + 데이터 컴플라이언스 공동 솔루션 개발.", people: [{ name: "Dario Amodei", role: "CEO" }, { name: "Daniela Amodei", role: "President" }, { name: "Tom Brown", role: "VP of Product" }, { name: "Chris Olah", role: "Co-Founder, Research" }, { name: "Jared Kaplan", role: "Co-Founder, Head of Science" }, { name: "Jan Leike", role: "Head of Alignment" }, { name: "Mike Krieger", role: "CPO (ex-Instagram)" }], techIntel: ["Constitutional AI: 인간 피드백 없이 AI가 스스로 안전성을 학습하는 기술. 규제 대응의 핵심 차별화.", "Claude Code: CLI 기반 에이전틱 코딩 도구. 개발자 시장 직접 공략.", "MCP(Model Context Protocol): 외부 도구/서비스를 Claude에 연결하는 개방형 프로토콜. 생태계 확장 전략.", "Claude Opus 4.6: 코딩/분석/장문 처리에서 GPT-5와 경쟁하는 최상위 모델."], rumors: ["Amazon이 Anthropic 이사회 의석을 요구하고 있다는 내부 정보 — 독립성 위협.", "Claude 5 개발이 예상보다 빨리 진행 중이며 2026 Q3 출시를 목표로 한다는 소문.", "Anthropic이 자체 추론 칩 설계를 Amazon Trainium 팀과 공동으로 진행 중이라는 루머.", "내부 직원들 사이에서 '안전 우선' 문화와 '시장 속도' 사이의 긴장이 커지고 있다는 Blind 정보."] },
+  "xAI": { redTeam: ["Elon Musk의 예측 불가능한 의사결정이 파트너십 안정성에 리스크.", "자체 인프라(Colossus) 구축으로 외부 클라우드 의존도 최소화 전략 — KT 가치 제한적.", "수익 모델 미확정으로 장기 파트너십 ROI 불확실."], questions: ["Grok 모델의 아시아 시장 배포 전략은?", "자체 인프라 외 외부 클라우드 파트너십 필요성을 어떻게 평가하는가?", "X 플랫폼과 Grok의 기업용 분리 제공 계획은?"], strengths: ["소버린 AI 인프라 공동 구축 시너지 잠재력.", "Grok 모델의 빠른 성능 향상 — 파트너십 가치 상승 가능.", "아시아 시장 진출 시 KT가 유력한 현지 파트너."], risks: ["자체 인프라 전략으로 KT Cloud 필요성 낮음.", "수익 모델 불확실 — 투자 회수 불투명.", "Musk 리스크 — 정치적/사회적 변동성."], engagement: "현 시점에서는 정보 수집 중심. Grok의 아시아 시장 전략이 구체화되면 KT Cloud 인프라 파트너십을 제안할 수 있음.", people: [{ name: "Elon Musk", role: "Founder & CEO" }, { name: "Igor Babuschkin", role: "CTO" }, { name: "Toby Pohlen", role: "Co-Founder, Engineering" }, { name: "Greg Yang", role: "Co-Founder, Research" }, { name: "Jimmy Ba", role: "Co-Founder, ML" }, { name: "Jared Birchall", role: "Director (Musk's Office)" }], techIntel: ["Colossus: 20만 H100 GPU 클러스터. 세계 최대 단일 AI 훈련 인프라 (Memphis, TN).", "Grok 3.5: 코딩/수학 벤치마크 최상위권. X 플랫폼 실시간 데이터 학습이 차별화.", "자체 추론 칩 개발 소문 — NVIDIA 의존도 탈피 전략.", "X API를 통한 실시간 소셜 데이터 접근이 다른 AI 기업 대비 고유한 데이터 해자."], rumors: ["Colossus 2.0으로 100만 GPU 클러스터를 2027년까지 구축한다는 Musk의 비공개 발언 루머.", "xAI가 별도 클라우드 서비스를 준비 중이라는 소문 — AWS/Azure/GCP에 도전?", "내부 엔지니어 이직률이 높다는 Blind 정보 — Musk의 경영 스타일에 대한 피로감.", "Grok API 엔터프라이즈 버전이 2026 Q3 출시 예정이라는 업계 정보."] },
+  "Meta": { redTeam: ["Llama 오픈소스 전략은 KT 차별화 가치를 약화 — 누구나 접근 가능.", "Meta의 한국 시장 투자 우선순위가 낮음.", "Reality Labs 손실 지속으로 전략 방향 불확실."], questions: ["Llama 모델의 엔터프라이즈 파인튜닝 파트너십 모델은?", "한국 시장에서 Meta AI의 B2B 전략은?", "한국 AI 연구센터 설립 계획의 구체적 내용은?"], strengths: ["Llama 오픈소스로 AI 모델 접근 용이 — 파인튜닝 자유도.", "WhatsApp/Instagram + KT 통신 번들 가능성.", "Meta AI 추론 인프라 일부 호스팅 기회."], risks: ["오픈소스 모델로 차별적 파트너십 가치 낮음.", "한국 시장 우선순위 낮음.", "광고 수익 편중으로 B2B 전략 약함."], engagement: "Llama 모델 기반 KT 전용 파인튜닝 PoC, WhatsApp Business API + KT 기업 고객 번들 탐색.", people: [{ name: "Mark Zuckerberg", role: "CEO" }, { name: "Andrew Bosworth", role: "CTO" }, { name: "Javier Olivan", role: "COO" }, { name: "Susan Li", role: "CFO" }, { name: "Yann LeCun", role: "Chief AI Scientist" }, { name: "Chris Cox", role: "CPO" }, { name: "Nick Clegg", role: "President, Global Affairs" }, { name: "Ahmad Al-Dahle", role: "VP GenAI" }], techIntel: ["Llama 4 Scout/Maverick: Mixture-of-Experts 아키텍처. 오픈 웨이트로 공개. 16개 전문가 모델 라우팅.", "MTIA v2: Meta 자체 AI 추론 칩. NVIDIA 의존도 탈피 시도. 현재 내부 추론 워크로드에 배포 중.", "Reality Labs: Quest 시리즈 + Ray-Ban Meta 스마트 글래스. 연간 $15B+ 투자 지속.", "WhatsApp Channels: 기업/크리에이터용 브로드캐스트 채널. B2B 커뮤니케이션 플랫폼으로 진화 중."], rumors: ["Llama 5가 GPT-5 수준을 목표로 하며 오픈소스 공개를 지속할 것이라는 내부 정보.", "Reality Labs의 내부 프로젝트 리뷰에서 Zuckerberg가 '3년 내 흑자 전환' 데드라인을 제시했다는 소문.", "Meta가 한국 AI 연구소 대신 싱가포르에 아시아 AI 허브를 설립할 수 있다는 루머.", "Instagram Reels의 AI 추천 알고리즘이 내부적으로 'too addictive' 판정을 받아 조정 중이라는 Blind 정보."] },
+  "Google": { redTeam: ["Google Cloud의 한국 시장 공격적 확장이 KT Cloud와 직접 충돌.", "Gemini 모델 독점적 통합이 KT의 멀티모델 전략을 제한할 가능성.", "반독점 규제 판결이 파트너십 구조에 영향."], questions: ["소버린 클라우드(Google Distributed Cloud)의 한국 배포 계획은?", "Gemini API의 KT 전용 파인튜닝 파트너십 가능성은?", "한국 정부 클라우드 사업에서 KT와의 협력 vs 경쟁 구도를 어떻게 보는가?"], strengths: ["Gemini 모델 + KT 엔터프라이즈 AI 서비스 통합 시너지.", "Android/YouTube + KT 통신/IPTV 시너지.", "소버린 AI 인프라(Google Distributed Cloud) 공동 구축."], risks: ["Google Cloud vs KT Cloud 직접 경쟁.", "Gemini 종속으로 멀티모델 전략 제한.", "반독점 리스크."], engagement: "Google Distributed Cloud 기반 소버린 AI 인프라 공동 구축, Gemini의 KT 엔터프라이즈 서비스 통합 PoC, 정부 클라우드 공동 입찰 구조 설계.", people: [{ name: "Sundar Pichai", role: "CEO" }, { name: "Thomas Kurian", role: "CEO, Google Cloud" }, { name: "Demis Hassabis", role: "CEO, DeepMind" }, { name: "Ruth Porat", role: "President & CIO" }, { name: "Jeff Dean", role: "Chief Scientist" }, { name: "Prabhakar Raghavan", role: "SVP, Knowledge & Info" }, { name: "Urs Hölzle", role: "SVP, Infrastructure" }, { name: "James Manyika", role: "SVP, Research & AI" }], techIntel: ["Gemini 2.5 Pro: 100만 토큰 컨텍스트 윈도우. 코딩/분석 벤치마크 최상위. 'thinking' 모드 내장.", "TPU v6 (Trillium): 자체 AI 칩. H100 대비 성능/전력 효율 우위 주장. Cloud TPU로 외부 제공.", "Google Distributed Cloud (GDC): 온프레미스/에지 배포용 소버린 클라우드. 정부/통신사 타겟.", "Vertex AI: 모델 학습/배포/모니터링 통합 플랫폼. AutoML + 커스텀 모델 + Gemini API 통합."], rumors: ["Google Cloud 한국 팀이 공공 클라우드 시장에서 '가격 덤핑' 전략을 내부 승인받았다는 소문 — KT Cloud 직접 위협.", "DeepMind와 Google Brain 통합 이후 내부 갈등이 여전하다는 Blind 정보 — 연구 방향성 혼선.", "Gemini Ultra 모델의 한국어 성능이 GPT-5 대비 열위라는 내부 평가 루머.", "GDC의 한국 배포가 KT와의 비공식 협의 중이라는 업계 정보 — 아직 공식 발표 전."] },
+  "Netflix": { redTeam: ["AI/클라우드 교차점이 제한적 — CDN 최적화 이상의 전략적 깊이 없음.", "Netflix 광고 티어가 KT IPTV 광고와 경쟁.", "콘텐츠 비용 증가로 파트너십 투자 여력 제한."], questions: ["Open Connect CDN의 KT 네트워크 엣지 통합 심화 가능성은?", "한국 오리지널 콘텐츠 투자 확대 시 KT와의 공동 제작 모델은?", "광고 지원 요금제에서 KT IPTV와의 시너지 모델은?"], strengths: ["Netflix + KT IPTV/통신 번들 시너지 강함.", "한국 콘텐츠 투자 적극적 — 공동 제작 기회.", "Open Connect CDN + KT 네트워크 최적화."], risks: ["AI/클라우드 전략적 교차점 제한적.", "광고 티어가 KT IPTV와 경쟁.", "Application 레이어로 인프라 파트너십 깊이 얕음."], engagement: "KT IPTV 독점 번들 확대, 한국 오리지널 콘텐츠 공동 제작/투자, Open Connect CDN의 KT 엣지 노드 통합 심화.", people: [{ name: "Ted Sarandos", role: "Co-CEO" }, { name: "Greg Peters", role: "Co-CEO" }, { name: "Minyoung Kim", role: "VP, Content (Korea)" }, { name: "Spencer Neumann", role: "CFO" }, { name: "Bela Bajaria", role: "Chief Content Officer" }, { name: "Elizabeth Stone", role: "CTO" }, { name: "Scott Stuber", role: "Head of Film" }, { name: "Don Shin", role: "Director, Korea Business" }], techIntel: ["Open Connect CDN: Netflix 자체 CDN. 전 세계 ISP에 캐시 서버를 무료 배포. KT 네트워크에도 설치됨.", "Cosmos: Netflix 자체 비디오 인코딩 프레임워크. AV1 코덱 최적화. 대역폭 절감 핵심 기술.", "추천 알고리즘: 시청 데이터 + 콘텐츠 메타데이터 + A/B 테스트 기반. 매출의 80%가 추천에서 발생한다는 추정.", "게임 사업: 모바일 게임 40+ 타이틀. 구독자 번들 무료 제공. 아직 초기 단계."], rumors: ["Netflix가 라이브 스포츠 중계에 본격 진출할 것이라는 내부 정보 — WWE에 이어 NFL/NBA 협상 중.", "한국 콘텐츠 투자가 2027년부터 축소될 수 있다는 업계 루머 — ROI 재평가.", "광고 티어의 한국 수익이 예상보다 낮아 광고주 유치에 고전 중이라는 정보.", "Open Connect 팀이 AI 추론 에지 배포를 CDN 인프라에 통합하는 실험을 진행 중이라는 기술 루머."] },
 };
 
 // ─── Sub-Components (identical to working version) ───
@@ -235,23 +220,38 @@ function AxisBar({ score, weight, signals }: { score: AxisScoreData; weight: num
 
 function SignalCard({ signal }: { signal: Signal }) {
   const pos = signal.impact_score > 0;
-  return (
-    <div style={{ ...glass.cardInner, padding: "12px 16px", marginBottom: 8 }}>
+  const neg = signal.impact_score < 0;
+  const neutral = signal.impact_score === 0;
+  const scoreColor = pos ? TEAL : neg ? RED : "#94a3b8";
+  const scoreBg = pos ? "rgba(0,163,155,0.08)" : neg ? "rgba(229,77,83,0.08)" : "rgba(148,163,184,0.08)";
+  const hasUrl = signal.source_url && signal.source_url.startsWith("http");
+
+  const content = (
+    <div style={{ ...glass.cardInner, padding: "12px 16px", marginBottom: 8, cursor: hasUrl ? "pointer" : "default", transition: "box-shadow 0.2s" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
         <div style={{ flex: 1 }}>
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 4 }}>
             <span style={{ fontSize: 10, color: "#94a3b8", fontWeight: 500 }}>{signal.event_date}</span>
             <span style={{ fontSize: 10, fontWeight: 600, color: TEAL_DARK, padding: "1px 8px", background: "rgba(0,163,155,0.08)", borderRadius: 4 }}>{signal.event_type}</span>
             {signal.evidence_quality === "official" && <span style={{ fontSize: 9, color: TEAL, fontWeight: 600 }}>✓ Official</span>}
+            {hasUrl && <span style={{ fontSize: 9, color: "#94a3b8" }}>↗ 원문</span>}
           </div>
           <p style={{ fontSize: 13, color: "#334155", lineHeight: 1.5, margin: 0 }}>{signal.headline}</p>
+          {signal.summary && signal.summary !== signal.headline && (
+            <p style={{ fontSize: 11, color: "#64748b", lineHeight: 1.4, margin: "4px 0 0", fontStyle: "italic" }}>{signal.summary}</p>
+          )}
         </div>
-        <div style={{ padding: "4px 10px", borderRadius: 8, minWidth: 44, textAlign: "center", background: pos ? "rgba(0,163,155,0.08)" : "rgba(229,77,83,0.08)", border: `1px solid ${pos ? TEAL : RED}20` }}>
-          <span style={{ fontSize: 14, fontWeight: 700, color: pos ? TEAL : RED }}>{pos ? "+" : ""}{signal.impact_score}</span>
+        <div style={{ padding: "4px 10px", borderRadius: 8, minWidth: 44, textAlign: "center", background: scoreBg, border: `1px solid ${scoreColor}20` }}>
+          <span style={{ fontSize: 14, fontWeight: 700, color: scoreColor }}>{pos ? "+" : ""}{signal.impact_score}</span>
         </div>
       </div>
     </div>
   );
+
+  if (hasUrl) {
+    return <a href={signal.source_url!} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>{content}</a>;
+  }
+  return content;
 }
 
 function SliderControl({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
@@ -488,6 +488,14 @@ export default function SPITFIREPage() {
                 {o.ticker && <span style={{ opacity: 0.7, marginLeft: 4, fontSize: 10 }}>({o.ticker})</span>}
               </button>
             ))}
+            {/* +Add (coming soon) */}
+            <div style={{
+              padding: "7px 16px", borderRadius: 10, fontSize: 12, fontWeight: 500,
+              color: "#94a3b8", border: "1.5px dashed #cbd5e1", background: "transparent",
+              display: "flex", alignItems: "center", gap: 4, cursor: "default",
+            }}>
+              <span style={{ fontSize: 14, lineHeight: 1 }}>+</span> Add <span style={{ fontSize: 9, color: "#cbd5e1" }}>(coming soon)</span>
+            </div>
           </div>
           {org && (
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -558,7 +566,7 @@ export default function SPITFIREPage() {
           </div>
 
           {/* [4] Recent Signals */}
-          <Section title="Recent Signals" icon={Activity} iconColor={TEAL} badge={String(signals.length)}>
+          <Section title="Recent Signals (최근 14일)" icon={Activity} iconColor={TEAL} badge={String(signals.length)}>
             {signals.length > 0 ? signals.map(s => <SignalCard key={s.id} signal={s} />) : <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>수집된 최근 신호가 없습니다. TINA Signal Engine 수집 후 표시됩니다.</p>}
           </Section>
 

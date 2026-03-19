@@ -80,12 +80,12 @@ export async function fetchCompanyDashboard(
         .eq("organization_id", organizationId)
         .order("scoring_dimensions(display_order)"),
 
-      // Recent signals (not stale)
+      // Recent signals — 14일 이내만 표시
       client
         .from("signals")
         .select("*")
         .eq("organization_id", organizationId)
-        .neq("freshness_bucket", "stale")
+        .gte("event_date", new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10))
         .order("event_date", { ascending: false })
         .limit(20),
 
@@ -162,17 +162,17 @@ export async function fetchSignals(
   organizationId: string,
   freshnessBucket?: string
 ): Promise<Signal[]> {
+  const cutoff = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   let query = client
     .from("signals")
     .select("*")
     .eq("organization_id", organizationId)
+    .gte("event_date", cutoff)
     .order("event_date", { ascending: false })
     .limit(50);
 
   if (freshnessBucket) {
     query = query.eq("freshness_bucket", freshnessBucket);
-  } else {
-    query = query.neq("freshness_bucket", "stale");
   }
 
   const { data, error } = await query;
