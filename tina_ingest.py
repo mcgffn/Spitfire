@@ -158,8 +158,8 @@ def translate_headline(company_name: str, title: str) -> str:
                 {"role": "system", "content": "영문 뉴스 헤드라인을 한글로 번역하세요. 30자 이내 개조식으로. 번역문만 출력."},
                 {"role": "user", "content": f"기업: {company_name}\n헤드라인: {title}"},
             ],
-            "max_tokens": 100,
-            "temperature": 0.1,
+            "max_completion_tokens": 100,
+            "temperature": 1,
         }, headers={
             "api-key": AZURE_API_KEY,
             "Content-Type": "application/json",
@@ -193,8 +193,9 @@ def classify_article(company_name: str, article: dict) -> dict | None:
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_msg},
             ],
-            "max_tokens": 300,
-            "temperature": 0.1,
+            "max_completion_tokens": 300,
+            "temperature": 1,
+            "response_format": {"type": "json_object"},
         }, headers={
             "api-key": AZURE_API_KEY,
             "Content-Type": "application/json",
