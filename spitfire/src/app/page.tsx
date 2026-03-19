@@ -8,7 +8,7 @@ import {
 import {
   Shield, TrendingUp, AlertTriangle, ChevronDown, ChevronUp,
   Eye, Ban, Search, MessageSquare, RotateCcw, Users, Clock,
-  ArrowRight, Activity, Loader2, RefreshCw, Database, UserCircle,
+  ArrowRight, Activity, Loader2, RefreshCw, Database, UserCircle, Lock,
 } from "lucide-react";
 import { useSpitfireData } from "@/lib/hooks/useSpitfireData";
 import type { AxisScoreData, Signal } from "@/lib/supabase/types";
@@ -274,6 +274,29 @@ function CustomDot(props: any) {
   return <circle cx={cx} cy={cy} r={4} fill={TEAL} stroke="white" strokeWidth={2} />;
 }
 
+// ─── Period Selector (14일 active, 1개월·3개월 coming soon) ───
+function PeriodSelector() {
+  return (
+    <div style={{ display: "flex", gap: 6, marginBottom: 12 }}>
+      <div style={{
+        padding: "5px 14px", borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: "default",
+        color: "white", background: `linear-gradient(135deg, ${TEAL}, ${TEAL_DARK})`,
+        boxShadow: `0 2px 8px ${TEAL}40`,
+      }}>최근 14일</div>
+      <div style={{
+        padding: "5px 14px", borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: "default",
+        color: "#cbd5e1", background: "rgba(226,232,240,0.4)", border: "1px solid rgba(226,232,240,0.5)",
+        display: "flex", alignItems: "center", gap: 4,
+      }}><Lock size={10} color="#cbd5e1" /> 최근 1개월 <span style={{ fontSize: 8, color: "#94a3b8" }}>Coming Soon</span></div>
+      <div style={{
+        padding: "5px 14px", borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: "default",
+        color: "#cbd5e1", background: "rgba(226,232,240,0.4)", border: "1px solid rgba(226,232,240,0.5)",
+        display: "flex", alignItems: "center", gap: 4,
+      }}><Lock size={10} color="#cbd5e1" /> 최근 3개월 <span style={{ fontSize: 8, color: "#94a3b8" }}>Coming Soon</span></div>
+    </div>
+  );
+}
+
 // ─── Collapsible Section helper ───
 function Section({ title, icon: Icon, iconColor, badge, defaultOpen, children }: { title: string; icon: any; iconColor: string; badge?: string; defaultOpen?: boolean; children: React.ReactNode }) {
   const [open, setOpen] = useState(defaultOpen ?? true);
@@ -522,8 +545,13 @@ export default function SPITFIREPage() {
 
           {/* Radar + Scores */}
           <div style={{ ...glass.card, padding: "24px" }}>
-            <h3 style={{ fontSize: 15, fontWeight: 700, color: "#1e293b", margin: "0 0 4px 0" }}>8-Axis Partnership Evaluation</h3>
-            <p style={{ fontSize: 11, color: "#94a3b8", margin: "0 0 16px 0" }}>슬라이더 가중치 반영 · 외곽: 10점</p>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
+              <div>
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: "#1e293b", margin: "0 0 4px 0" }}>8-Axis Partnership Evaluation</h3>
+                <p style={{ fontSize: 11, color: "#94a3b8", margin: "0 0 12px 0" }}>슬라이더 가중치 반영 · 외곽: 10점</p>
+              </div>
+            </div>
+            <PeriodSelector />
             <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
               <div style={{ flex: 1, height: 320 }}>
                 <ResponsiveContainer width="100%" height="100%">
@@ -561,7 +589,8 @@ export default function SPITFIREPage() {
           </div>
 
           {/* [4] Recent Signals */}
-          <Section title="Recent Signals (최근 14일)" icon={Activity} iconColor={TEAL} badge={String(signals.length)}>
+          <Section title="Recent Signals" icon={Activity} iconColor={TEAL} badge={String(signals.length)}>
+            <PeriodSelector />
             {signals.length > 0 ? signals.map(s => <SignalCard key={s.id} signal={s} />) : <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>수집된 최근 신호가 없습니다. TINA Signal Engine 수집 후 표시됩니다.</p>}
           </Section>
 
