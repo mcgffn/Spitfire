@@ -30,13 +30,13 @@ import json
 import requests
 from datetime import datetime, timedelta, timezone
 
-# ─── Config ───
-NEWS_API_KEY = os.environ.get("NEWS_API_KEY")
-AZURE_ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT", "").rstrip("/")
-AZURE_API_KEY = os.environ.get("AZURE_OPENAI_API_KEY")
-AZURE_DEPLOYMENT = os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-5-nano")
-SUPABASE_URL = os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY")
+# ─── Config (strip whitespace/newlines from secrets) ───
+NEWS_API_KEY = (os.environ.get("NEWS_API_KEY") or "").strip()
+AZURE_ENDPOINT = (os.environ.get("AZURE_OPENAI_ENDPOINT") or "").strip().rstrip("/")
+AZURE_API_KEY = (os.environ.get("AZURE_OPENAI_API_KEY") or "").strip()
+AZURE_DEPLOYMENT = (os.environ.get("AZURE_OPENAI_DEPLOYMENT") or "gpt-5-nano").strip()
+SUPABASE_URL = ((os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL")) or "").strip().rstrip("/")
+SUPABASE_KEY = ((os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY")) or "").strip()
 
 HEADERS_SB = {
     "apikey": SUPABASE_KEY or "",
