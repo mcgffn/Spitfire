@@ -64,36 +64,31 @@ const glass = {
   },
 };
 
-// ─── [1] Flame Logo SVG — Clean teal fire, no face ───
+// ─── [1] Flame Logo SVG — Fierce blazing fire ───
 function SpitfireLogo({ size = 42 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" style={{ filter: "drop-shadow(0px 3px 5px rgba(0,163,155,0.4))" }}>
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" style={{ filter: "drop-shadow(0px 2px 6px rgba(0,163,155,0.5))" }}>
       <defs>
-        <linearGradient id="fl" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#5EEAD4"/><stop offset="30%" stopColor="#2DD4BF"/><stop offset="60%" stopColor="#00A39B"/><stop offset="100%" stopColor="#005C57"/>
+        <linearGradient id="f1" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#5EEAD4"/><stop offset="25%" stopColor="#2DD4BF"/><stop offset="55%" stopColor="#00A39B"/><stop offset="100%" stopColor="#004D49"/>
         </linearGradient>
-        <linearGradient id="flInner" x1="40" y1="10" x2="40" y2="70" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.4"/><stop offset="100%" stopColor="#00A39B" stopOpacity="0.1"/>
+        <linearGradient id="f2" x1="40" y1="5" x2="40" y2="65" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#99F6E4"/><stop offset="100%" stopColor="#00A39B" stopOpacity="0.3"/>
         </linearGradient>
-        <filter id="glo"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      {/* Main flame body */}
-      <path d="M40 2 C40 2,30 16,26 24 C20 34,15 40,13 50 C11 58,15 68,22 74 C28 78,34 80,40 80 C46 80,52 78,58 74 C65 68,69 58,67 50 C65 40,60 34,54 24 C50 16,40 2,40 2Z" fill="url(#fl)" filter="url(#glo)"/>
-      {/* Left flame tongue */}
-      <path d="M22 12 C20 20,16 30,15 38 C14 44,15 48,17 52" stroke="url(#fl)" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.9"/>
-      {/* Right flame tongue */}
-      <path d="M58 12 C60 20,64 30,65 38 C66 44,65 48,63 52" stroke="url(#fl)" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.9"/>
-      {/* Center spike */}
-      <path d="M40 2 L40 18" stroke="#5EEAD4" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.7"/>
-      {/* Inner flame highlight */}
-      <path d="M40 22 C40 22,34 34,32 42 C30 50,33 62,40 66 C47 62,50 50,48 42 C46 34,40 22,40 22Z" fill="url(#flInner)" opacity="0.6"/>
-      {/* Glass edge highlight */}
-      <path d="M28 20 C26 28,22 36,21 44 C20 50,22 58,26 64" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.3"/>
-      {/* Gel droplets */}
-      <circle cx="28" cy="32" r="2.5" fill="white" fillOpacity="0.5"/>
-      <circle cx="48" cy="22" r="1.5" fill="white" fillOpacity="0.4"/>
-      <circle cx="55" cy="38" r="2" fill="white" fillOpacity="0.35"/>
-      <circle cx="36" cy="14" r="1" fill="white" fillOpacity="0.5"/>
+      {/* Outer wild flame — jagged edges */}
+      <path d="M40 0 C42 8,48 10,46 18 C50 12,54 6,56 14 C58 20,64 16,66 24 C72 18,74 26,72 34 C78 30,80 42,76 50 C80 58,74 68,68 74 C62 78,52 80,40 80 C28 80,18 78,12 74 C6 68,0 58,4 50 C0 42,2 30,8 34 C6 26,8 18,14 24 C16 16,22 20,24 14 C26 6,30 12,34 18 C32 10,38 8,40 0Z" fill="url(#f1)"/>
+      {/* Middle flame layer — slightly smaller, brighter */}
+      <path d="M40 8 C41 14,46 16,44 22 C47 17,52 12,53 19 C56 14,60 20,58 28 C64 24,66 34,62 42 C66 50,60 60,54 66 C48 72,40 74,40 74 C40 74,32 72,26 66 C20 60,14 50,18 42 C14 34,16 24,22 28 C20 20,24 14,27 19 C28 12,33 17,36 22 C34 16,39 14,40 8Z" fill="url(#f2)" opacity="0.5"/>
+      {/* Inner core — hottest part */}
+      <path d="M40 24 C42 30,46 34,44 40 C48 36,50 32,50 38 C52 44,50 54,46 60 C44 64,40 66,40 66 C40 66,36 64,34 60 C30 54,28 44,30 38 C30 32,32 36,36 40 C34 34,38 30,40 24Z" fill="#5EEAD4" opacity="0.3"/>
+      {/* Sparks / embers */}
+      <circle cx="22" cy="20" r="1.5" fill="#5EEAD4" opacity="0.7"/>
+      <circle cx="58" cy="18" r="1.2" fill="#5EEAD4" opacity="0.6"/>
+      <circle cx="16" cy="36" r="1" fill="#99F6E4" opacity="0.5"/>
+      <circle cx="64" cy="32" r="1.3" fill="#99F6E4" opacity="0.5"/>
+      <circle cx="32" cy="10" r="0.8" fill="white" opacity="0.6"/>
+      <circle cx="50" cy="8" r="0.7" fill="white" opacity="0.5"/>
     </svg>
   );
 }
