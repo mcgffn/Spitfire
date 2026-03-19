@@ -30,13 +30,21 @@ import json
 import requests
 from datetime import datetime, timedelta, timezone
 
-# ─── Config (strip whitespace/newlines from secrets) ───
-NEWS_API_KEY = (os.environ.get("NEWS_API_KEY") or "").strip()
-AZURE_ENDPOINT = (os.environ.get("AZURE_OPENAI_ENDPOINT") or "").strip().rstrip("/")
-AZURE_API_KEY = (os.environ.get("AZURE_OPENAI_API_KEY") or "").strip()
-AZURE_DEPLOYMENT = (os.environ.get("AZURE_OPENAI_DEPLOYMENT") or "gpt-5-nano").strip()
-SUPABASE_URL = ((os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL")) or "").strip().rstrip("/")
-SUPABASE_KEY = ((os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY")) or "").strip()
+# ─── Config (strip ALL whitespace/newlines/carriage returns from secrets) ───
+def _clean(val):
+    """Remove any whitespace, newlines, carriage returns from env value."""
+    return (val or "").strip().replace("\r", "").replace("\n", "").replace(" ", "") if val else ""
+
+def _clean_url(val):
+    """Clean URL but preserve internal structure."""
+    return (val or "").strip().replace("\r", "").replace("\n", "").rstrip("/")
+
+NEWS_API_KEY = _clean(os.environ.get("NEWS_API_KEY"))
+AZURE_ENDPOINT = _clean_url(os.environ.get("AZURE_OPENAI_ENDPOINT"))
+AZURE_API_KEY = _clean(os.environ.get("AZURE_OPENAI_API_KEY"))
+AZURE_DEPLOYMENT = _clean(os.environ.get("AZURE_OPENAI_DEPLOYMENT")) or "gpt-5-nano"
+SUPABASE_URL = _clean_url(os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL") or "")
+SUPABASE_KEY = _clean(os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY"))
 
 HEADERS_SB = {
     "apikey": SUPABASE_KEY or "",
@@ -339,6 +347,7 @@ def main():
     print(f"   NewsAPI:  {'✅' if NEWS_API_KEY else '❌'}")
     print(f"   Azure AI: {'✅ ' + AZURE_DEPLOYMENT if AZURE_API_KEY else '⚠ 폴백'}")
     print(f"   Endpoint: {AZURE_ENDPOINT[:50]}..." if AZURE_ENDPOINT else "   Endpoint: ❌")
+    print(f"   Key len:  {len(AZURE_API_KEY)} chars, starts='{AZURE_API_KEY[:4]}', ends='{AZURE_API_KEY[-4:]}'")
     print()
 
     if not SUPABASE_URL or not SUPABASE_KEY:
