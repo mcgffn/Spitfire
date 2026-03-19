@@ -27,6 +27,7 @@ GitHub Actions: 매일 KST 07:00 자동 실행
 
 import os
 import json
+import time
 import requests
 from datetime import datetime, timedelta, timezone
 
@@ -59,39 +60,11 @@ VALID_AXES = [
     "internal_compatibility", "timing_urgency",
 ]
 
-# ─── TINA-style AI prompt: 한글 개조식 요약 + 8축 분류 ───
-SYSTEM_PROMPT = """당신은 KT의 전략적 파트너십 분석가입니다.
-KT의 핵심 자산: KT Cloud AIDC(AI 데이터센터), B2B/B2G 기업 채널, IPTV/소비자 유통, 소버린 AI 인프라 전략.
-
-아래 영문 뉴스 기사를 분석하여 JSON으로 응답하세요. 반드시 아래 형식만 출력하세요.
-
-{
-  "headline_ko": "한글 개조식 요약 (30자 이내, 핵심만)",
-  "summary_ko": "KT 파트너십 관점에서 이 뉴스가 왜 중요한지 1~2문장 한글 설명",
-  "target_axis": "8축 중 가장 관련된 축 key",
-  "impact_score": 정수(-3~+3),
-  "kt_relevance_score": 소수(0~10),
-  "event_type": "M&A|Product_Launch|Partnership|Investment|Regulation|Earnings|Scandal|Restructuring|Other"
-}
-
-8축 기준:
-- strategic_alignment: KT 전략 방향과의 일치도
-- capability_complementarity: 상호 역량 보완
-- monetization_clarity: 수익화 가시성
-- execution_readiness: 실행 준비도
-- control_dependency: 종속/통제 리스크 (부정적 뉴스는 음수)
-- market_access: 시장/채널 접근 가치
-- internal_compatibility: 조직 적합성
-- timing_urgency: 타이밍 긴급성
-
-impact_score 기준:
-+3: KT 파트너십에 매우 긍정적
-+1/+2: 다소 긍정적
-0: 중립 (KT와 직접 관련 없음)
--1/-2: 다소 부정적
--3: 매우 부정적
-
-JSON만 출력하세요. 마크다운이나 백틱 금지."""
+# ─── TINA-style AI prompt: 한글 개조식 요약 + 8축 분류 (짧게) ───
+SYSTEM_PROMPT = """영문 뉴스를 KT 파트너십 관점에서 분석하고 JSON으로 출력하세요.
+{"headline_ko":"한글 요약 30자이내","summary_ko":"KT 관점 중요도 1문장","target_axis":"축key","impact_score":0,"kt_relevance_score":5.0,"event_type":"Other"}
+target_axis: strategic_alignment, capability_complementarity, monetization_clarity, execution_readiness, control_dependency, market_access, internal_compatibility, timing_urgency
+impact_score: -3~+3 정수. event_type: M&A|Product_Launch|Partnership|Investment|Regulation|Earnings|Other"""
 
 
 def get_organizations():
@@ -123,7 +96,7 @@ def fetch_news(company_name: str, ticker: str = None, hours_back: int = 48) -> l
     try:
         resp = requests.get("https://newsapi.org/v2/everything", params={
             "q": query, "from": from_dt, "language": "en",
-            "sortBy": "relevancy", "pageSize": 10, "apiKey": NEWS_API_KEY,
+            "sortBy": "relevancy", "pageSize": 5, "apiKey": NEWS_API_KEY,
         }, timeout=15)
         resp.raise_for_status()
         articles = resp.json().get("articles", [])
@@ -158,12 +131,12 @@ def translate_headline(company_name: str, title: str) -> str:
                 {"role": "system", "content": "영문 뉴스 헤드라인을 한글로 번역하세요. 30자 이내 개조식으로. 번역문만 출력."},
                 {"role": "user", "content": f"기업: {company_name}\n헤드라인: {title}"},
             ],
-            "max_completion_tokens": 100,
+            "max_completion_tokens": 4096,
             "temperature": 1,
         }, headers={
             "api-key": AZURE_API_KEY,
             "Content-Type": "application/json",
-        }, timeout=20)
+        }, timeout=60)
         if resp.ok:
             translated = resp.json()["choices"][0]["message"]["content"].strip()
             if has_korean(translated):
@@ -193,13 +166,13 @@ def classify_article(company_name: str, article: dict) -> dict | None:
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_msg},
             ],
-            "max_completion_tokens": 300,
+            "max_completion_tokens": 4096,
             "temperature": 1,
             "response_format": {"type": "json_object"},
         }, headers={
             "api-key": AZURE_API_KEY,
             "Content-Type": "application/json",
-        }, timeout=30)
+        }, timeout=60)
 
         if not resp.ok:
             print(f"    ⚠ Azure API 오류 {resp.status_code}: {resp.text[:120]}")
@@ -359,7 +332,7 @@ def main():
     print(f"📋 대상 기업: {len(orgs)}개\n")
 
     total = 0
-    for org in orgs:
+    for idx, org in enumerate(orgs):
         oid, name, ticker = org["id"], org["name"], org.get("ticker")
         print(f"── {name} {'(' + ticker + ')' if ticker else ''} ──")
 
@@ -370,13 +343,25 @@ def main():
             print(f"  ⏭ 새 기사 없음\n")
             continue
 
-        classified = [c for c in (classify_article(name, a) for a in articles) if c is not None]
+        # Classify with sleep between articles to avoid Azure rate limits
+        classified = []
+        for a in articles:
+            c = classify_article(name, a)
+            if c is not None:
+                classified.append(c)
+            time.sleep(2)  # Azure rate limit 방지
+
         if not classified:
             print(f"  ⏭ AI 번역 성공한 기사 없음\n")
             continue
         n = insert_signals(oid, classified, existing)
         total += n
         print(f"  📥 {n}건 신규 저장\n")
+
+        # NewsAPI rate limit 방지: 기업 간 15초 대기
+        if idx < len(orgs) - 1:
+            print(f"  ⏳ NewsAPI 요청 제한 대기 (15초)...")
+            time.sleep(15)
 
     refresh_freshness()
     print(f"🏁 완료. 총 {total}건 신규 신호 저장.")
