@@ -55,51 +55,43 @@ export async function fetchCompanyDashboard(
   client: Client,
   organizationId: string
 ): Promise<CompanyDashboardData | null> {
-  // Parallel fetch — 4 queries at once
-  const [orgResult, profileResult, scoresResult, signalsResult, intersectionsResult] =
-    await Promise.all([
-      // Organization
-      client
-        .from("organizations")
-        .select("*")
-        .eq("id", organizationId)
-        .single(),
-
-      // Current profile
-      client
-        .from("organization_profiles")
-        .select("*")
-        .eq("organization_id", organizationId)
-        .eq("is_current", true)
-        .single(),
-
-      // Scores with dimension info (JOIN)
-      client
-        .from("organization_scores")
-        .select("*, scoring_dimensions(*)")
-        .eq("organization_id", organizationId)
-        .order("scoring_dimensions(display_order)"),
-
-      // Recent signals — 14일 이내만 표시
-      client
-        .from("signals")
-        .select("*")
-        .eq("organization_id", organizationId)
-        .gte("event_date", new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10))
-        .order("event_date", { ascending: false })
-        .limit(20),
-
-      // KT intersections with node info
-      client
-        .from("organization_kt_intersections")
-        .select("*, kt_value_chain_nodes(*)")
-        .eq("organization_id", organizationId),
-    ]);
+  // Fetch each query — type assertions to avoid TS inference issues with Supabase generics
+  const orgResult: any = await client
+    .from("organizations")
+    .select("*")
+    .eq("id", organizationId)
+    .single();
 
   if (orgResult.error || !orgResult.data) {
     console.error("fetchCompanyDashboard org error:", orgResult.error);
     return null;
   }
+
+  const profileResult: any = await client
+    .from("organization_profiles")
+    .select("*")
+    .eq("organization_id", organizationId)
+    .eq("is_current", true)
+    .single();
+
+  const scoresResult: any = await client
+    .from("organization_scores")
+    .select("*, scoring_dimensions(*)")
+    .eq("organization_id", organizationId);
+
+  const cutoff = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const signalsResult: any = await client
+    .from("signals")
+    .select("*")
+    .eq("organization_id", organizationId)
+    .gte("event_date", cutoff)
+    .order("event_date", { ascending: false })
+    .limit(20);
+
+  const intersectionsResult: any = await client
+    .from("organization_kt_intersections")
+    .select("*, kt_value_chain_nodes(*)")
+    .eq("organization_id", organizationId);
 
   // Transform scores into AxisScoreData[]
   const scores: AxisScoreData[] = (scoresResult.data || []).map((s: any) => {
@@ -119,7 +111,6 @@ export async function fetchCompanyDashboard(
     };
   });
 
-  // Overall confidence = average of per-axis confidence
   const confidence =
     scores.length > 0
       ? scores.reduce((sum, s) => sum + s.confidence, 0) / scores.length
